@@ -1,5 +1,6 @@
 import { postData } from "./utils/httpReq.js";
-import { getCookie, setCookie } from "./utils/cookie.js";
+import { setCookie } from "./utils/cookie.js";
+import { authHandler } from "./utils/authorization.js";
 
 const inputsBox = document.querySelectorAll("input");
 const loginButton = document.querySelector("button");
@@ -23,11 +24,7 @@ const submitHandler = async (event) => {
 
 // check user access level in different pages
 const init = () => {
-    const cookie = getCookie();
-
-    if (cookie) {
-        location.assign("index.html");
-    }
+    authHandler();
 };
 
 loginButton.addEventListener("click", submitHandler);

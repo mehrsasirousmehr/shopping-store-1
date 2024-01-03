@@ -5,7 +5,7 @@ const setCookie = (data) => {
 
 // returns token to object
 const getCookie = () => {
-    const cookie = document.cookie;
+    const cookie = document.cookie; // get cookie
 
     if (cookie) {
         const cookieArray = cookie.split("=");

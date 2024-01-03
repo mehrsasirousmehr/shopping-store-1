@@ -1,12 +1,8 @@
-import { getCookie } from "./utils/cookie.js";
+import authHandler from "./utils/authorization.js";
 
 // check user access level in different pages
 const init = () => {
-    const cookie = getCookie();
-
-    if (!cookie) {
-        location.assign("auth.html");
-    }
+    authHandler();
 };
 
 document.addEventListener("DOMContentLoaded", init);
