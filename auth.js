@@ -1,6 +1,6 @@
 import { postData } from "./utils/httpReq.js";
 import { setCookie } from "./utils/cookie.js";
-import { authHandler } from "./utils/authorization.js";
+import authHandler from "./utils/authorization.js";
 
 const inputsBox = document.querySelectorAll("input");
 const loginButton = document.querySelector("button");
@@ -10,10 +10,6 @@ const submitHandler = async (event) => {
 
     const username = inputsBox[0].value;
     const password = inputsBox[1].value;
-    const data = {
-        username: "mor_2314",
-        password: "83r5^_",
-    };
 
     const response = await postData("auth/login", { username, password });
 
