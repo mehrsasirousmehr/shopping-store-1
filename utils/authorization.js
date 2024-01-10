@@ -5,11 +5,8 @@ const authHandler = () => {
     const cookie = getCookie();
     const url = location.href; // get url
 
-    if (cookie && url.includes("auth.html")) {
+    if ((cookie && url.includes("auth")) || (cookie && url.includes("dashboard"))) {
         location.assign("index.html");
-        return false;
-    } else if (!cookie && url.includes("dashboard")) {
-        location.assign("auth.html");
         return false;
     }
 };
