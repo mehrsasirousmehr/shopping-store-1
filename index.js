@@ -3,6 +3,8 @@ import { getData } from "./utils/httpReq.js";
 import { shortenText } from "./utils/stringFunc.js";
 
 let allProducts = null;
+let search = "";
+let category = "all";
 
 const loginButton = document.getElementById("login");
 const dashboardButton = document.getElementById("dashboard");
@@ -11,7 +13,7 @@ const searchButton = document.querySelector("button");
 const inputBox = document.querySelector("input");
 const listItems = document.querySelectorAll("li");
 
-const showProducts = (products) => {
+const renderProducts = (products) => {
     mainContent.innerHTML = "";
 
     products.forEach((product) => {
@@ -54,22 +56,31 @@ const init = async () => {
     }
 
     allProducts = await getData("products");
-    showProducts(allProducts);
+    renderProducts(allProducts);
+};
+
+const filterProducts = () => {
+    const filteredProducts = allProducts.filter((product) => {
+        if (category === "all") {
+            return product.title.toLowerCase().includes(search);
+        } else {
+            return product.title.toLowerCase().includes(search) && product.category.toLowerCase() === category;
+        }
+    });
+
+    renderProducts(filteredProducts);
 };
 
 // search products
 const searchHandler = () => {
-    const query = inputBox.value.trim().toLowerCase();
+    search = inputBox.value.trim().toLowerCase();
 
-    if (!query) return showProducts(allProducts);
-    const filteredProducts = allProducts.filter((product) => product.title.toLowerCase().includes(query));
-
-    showProducts(filteredProducts);
+    filterProducts();
 };
 
 // filter products
 const filterHandler = (event) => {
-    const category = event.target.innerText.toLowerCase();
+    category = event.target.innerText.toLowerCase();
 
     listItems.forEach((li) => {
         if (li.innerText.toLowerCase() === category) {
@@ -79,10 +90,7 @@ const filterHandler = (event) => {
         }
     });
 
-    if (category === "all") return showProducts(allProducts);
-
-    const filteredProducts = allProducts.filter((product) => product.category.toLowerCase() === category);
-    showProducts(filteredProducts);
+    filterProducts();
 };
 
 document.addEventListener("DOMContentLoaded", init);
